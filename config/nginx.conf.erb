@@ -35,7 +35,7 @@ http {
 		server_name _;
 		keepalive_timeout 5;
 
-		location /blog/ {
+		location ^~ /blog/ {
 		  rewrite ^/blog/?(.*)$ /$1 break;
 		  proxy_set_header Host rencyblog.herokuapp.com;
 		  proxy_set_header X-Real-IP $remote_addr;
