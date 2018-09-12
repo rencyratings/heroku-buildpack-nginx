@@ -35,13 +35,6 @@ http {
 		server_name _;
 		keepalive_timeout 5;
 
-		location / {
-			proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-			proxy_set_header Host $http_host;
-			proxy_redirect off;
-			proxy_pass http://app_server;
-		}
-
 		location /blog/ {
 		  rewrite ^/blog/?(.*)$ /$1 break;
 		  proxy_set_header Host rencyblog.herokuapp.com;
@@ -49,6 +42,13 @@ http {
 		  proxy_set_header X-Forwarded-Proto $scheme;
 		  proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
 		  proxy_pass http://rencyblog.herokuapp.com;
+		}
+
+                location / {
+		  proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+		  proxy_set_header Host $http_host;
+		  proxy_redirect off;
+		  proxy_pass http://app_server;
 		}
 	}
 }
